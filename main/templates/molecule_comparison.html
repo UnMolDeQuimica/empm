@@ -1,0 +1,389 @@
+<h4>Visualización</h4>
+
+<div class="card mb-3 border-primary">
+  <div class="card-header">Visualizador molecular 2D</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-center">
+      <div>
+        <p>Molécula 1</p>
+        {{ molecule_a_svg|safe }}
+      </div>
+      <div>
+        <p>Molécula 2</p>
+        {{ molecule_b_svg|safe }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4>Índices de similitud</h4>
+
+<div class="d-flex justify-content-center">
+  <div class="card border-info bg-light mx-3" style="width: 250px;">
+    <div class="card-header">Tanimoto (Morgan FP)</div>
+    <div class="card-body">
+      <h5>{{ tanimoto_morgan }}%</h5>
+      <div class="progress">
+        <div class="progress-bar bg-info" role="progressbar" style="width: {{ tanimoto_morgan }}%"  aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="my-3">Tanimoto usando fingerprints Morgan/ECFP (entorno atómico circular)</p>
+    </div>
+  </div>
+  <div class="card border-info bg-light mx-3" style="width: 250px;">
+    <div class="card-header">Tanimoto (RDKit FP)</div>
+    <div class="card-body">
+      <h5>{{ tanimoto_rdkit }}%</h5>
+      <div class="progress">
+        <div class="progress-bar bg-info" role="progressbar" style="width: {{ tanimoto_rdkit }}%"  aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="my-3">Tanimoto con fingerprints topológicos por defecto de RDKit</p>
+    </div>
+  </div>
+  <div class="card border-info bg-light mx-3" style="width: 250px;">
+    <div class="card-header">Tanimoto (MACCS)</div>
+    <div class="card-body">
+      <h5>{{ tanimoto_maccs }}%</h5>
+      <div class="progress">
+        <div class="progress-bar bg-info" role="progressbar" style="width: {{ tanimoto_maccs }}%"  aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="my-3">Tanimoto sobre 166 subestructuras químicas predefinidas MACCS</p>
+    </div>
+  </div>
+  <div class="card border-info bg-light mx-3" style="width: 250px;">
+    <div class="card-header">Similitud Dice</div>
+    <div class="card-body">
+      <h5>{{ dice }}%</h5>
+      <div class="progress">
+        <div class="progress-bar bg-info" role="progressbar" style="width: {{ dice }}%"  aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="my-3">Pondera doble las características comunes vs Tanimoto</p>
+    </div>
+  </div>
+  <div class="card border-info bg-light mx-3" style="width: 250px;">
+    <div class="card-header">Similitud Coseno</div>
+    <div class="card-body">
+      <h5>{{ cosine }}%</h5>
+      <div class="progress">
+        <div class="progress-bar bg-info" role="progressbar" style="width: {{ cosine }}%"  aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="my-3">Coseno del ángulo entre vectores de fingerprints moleculares</p>
+    </div>
+  </div>
+</div>
+
+<h4 style="margin-top: 20px;">Comparación de propiedades</h4>
+<div class="card mb-3 border-primary">
+    <div class="card-header">Propiedades fisicoquímicas y ADMET</div>
+    <div class="card-body" style="padding: 0%;">
+        <div class="tab-content text-start">
+            <div class="tab-pane fade active show" id="physicochemistry">
+                <table class="table table-hover" style="margin: 0%;">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Propiedad</th>
+                            <th scope="col">Tipo de Propiedad</th>
+                            <th scope="col">Molécula 1</th>
+                            <th scope="col">Molécula 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-info">
+                            <th scope="row">Peso Molecular</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.molecular_weight|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.molecular_weight|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">LogP</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.logp|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.logp|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Aceptores de Enlace H</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.hydrogen_bond_acceptors|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.hydrogen_bond_acceptors|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Donadores de Enlace H</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.hydrogen_bond_donors|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.hydrogen_bond_donors|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Regla de Lipinski</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.lipinski|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.lipinski|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">QED</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.qed|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.qed|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Centros Estereogénicos</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.stereo_centers|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.stereo_centers|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">TPSA</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.tpsa|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.tpsa|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Energía Libre Hidratación</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.hydrationfreeenergy_freesolv|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.hydrationfreeenergy_freesolv|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Lipofilia (AstraZeneca)</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.lipophilicity_astrazeneca|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.lipophilicity_astrazeneca|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Solubilidad (AqSolDB)</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule_a.solubility_aqsoldb|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.solubility_aqsoldb|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">BBB (Martins)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule_a.bbb_martins|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.bbb_martins|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">Biodisponibilidad</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule_a.bioavailability_ma|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.bioavailability_ma|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">HIA (Hou)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule_a.hia_hou|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.hia_hou|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">Caco-2 (Wang)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule_a.caco2_wang|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.caco2_wang|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">PAMPA (NCATS)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule_a.pampa_ncats|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.pampa_ncats|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">P-gp (Broccatelli)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule_a.pgp_broccatelli|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.pgp_broccatelli|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-light">
+                            <th scope="row">VDss (Lombardo)</th>
+                            <td>Distribución</td>
+                            <td>{{ molecule_a.vdss_lombardo|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.vdss_lombardo|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-light">
+                            <th scope="row">PPBR (AZ)</th>
+                            <td>Distribución</td>
+                            <td>{{ molecule_a.ppbr_az|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.ppbr_az|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP1A2 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp1a2_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp1a2_veith|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2C19 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp2c19_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp2c19_veith|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2C9 Sustrato</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp2c9_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp2c9_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2C9 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp2c9_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp2c9_veith|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2D6 Sustrato</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp2d6_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp2d6_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2D6 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp2d6_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp2d6_veith|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP3A4 Sustrato</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp3a4_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp3a4_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP3A4 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule_a.cyp3a4_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.cyp3a4_veith|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">Aclaramiento Hepatocitos</th>
+                            <td>Excreción</td>
+                            <td>{{ molecule_a.clearance_hepatocyte_az|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.clearance_hepatocyte_az|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">Aclaramiento Microsomas</th>
+                            <td>Excreción</td>
+                            <td>{{ molecule_a.clearance_microsome_az|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.clearance_microsome_az|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">Vida Media (Obach)</th>
+                            <td>Excreción</td>
+                            <td>{{ molecule_a.half_life_obach|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.half_life_obach|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">Test de Ames</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.ames|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.ames|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">Carcinogenicidad</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.carcinogens_lagunin|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.carcinogens_lagunin|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">ClinTox</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.clintox|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.clintox|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">DILI</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.dili|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.dili|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">hERG</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.herg|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.herg|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">Reacción Cutánea</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.skin_reaction|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.skin_reaction|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">LD50 (Zhu)</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.ld50_zhu|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.ld50_zhu|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-AR-LBD</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_ar_lbd|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_ar_lbd|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-AR</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_ar|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_ar|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-AhR</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_ahr|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_ahr|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-Aromatasa</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_aromatase|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_aromatase|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-ER-LBD</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_er_lbd|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_er_lbd|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-ER</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_er|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_er|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-PPAR-γ</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.nr_ppar_gamma|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.nr_ppar_gamma|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-ARE</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.sr_are|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.sr_are|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-ATAD5</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.sr_atad5|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.sr_atad5|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-HSE</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.sr_hse|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.sr_hse|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-MMP</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.sr_mmp|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.sr_mmp|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-p53</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule_a.sr_p53|floatformat:"5"|default:"-" }}</td>
+                            <td>{{ molecule_b.sr_p53|floatformat:"5"|default:"-" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
