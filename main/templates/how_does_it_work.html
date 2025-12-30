@@ -1,0 +1,46 @@
+<div class="container w-50 py-5">
+    <h2>Y esto... ¿Cómo funciona?</h2>
+    <p><em>Esta molécula... ¿Puede matarme?</em> es una web que utiliza diferentes tecnologías para poder hacer predicciones de las propiedades ADMET (adminitración, distribución, metabolismo, excreción y toxicidad) de una molécula.</p>
+    <p>Estas predicciones no siempre son precisas y bajo ningún concepto deben usarse como una base de datos real. </p>
+    <p>A modo de resumen, desde la interfaz web construida con Django podemos introducir un código SMILES que será enviado a RDKit para ser validado y luego a ADMET AI para que haga las predicciones correspondientes. Estas predicciones se almacenan en una base de datos para evitar repetir predicciones anteriores.</p>
+
+    <br>
+    <h2><img src="https://admet.ai.greenstonebio.com/static/images/ADMET.jpg" alt="ADMET-AI image" style="max-height: 50px;"> ADMET AI</h2>
+    <p>El corazón de <em>Esta molécula... ¿Puede matarme?</em> reside en <a target=”_blank” href="https://admet.ai.greenstonebio.com/">ADMET AI</a>.</p>
+    <p>Se trata de un <a target=”_blank” href="https://github.com/swansonk14/admet_ai">proyecto de código abierto</a> cuya finalidad es ofrecer una herramienta para realizar predicciones de las propiedades ADMET de las moléculas.</p>
+    <p>ADMET AI es, en esencia, un modelo de Machine Learning (una IA, vamos) entrenada con datos de <a target=”_blank” href="https://tdcommons.ai/">Therapeutics Data Commons</a> para hacer dichas predicciones.</p>
+    <p>Se puede utilizar como paquete de python, como hacemos aquí, como web o vía cli.</p>
+    <p>Para más información, podéis visitar <a target=”_blank” href="https://portal.valencelabs.com/blogs/post/admet-ai-a-machine-learning-admet-platform-for-evaluation-of-large-scale-QPEa0j5OTYYHTaA">este post</a> y, si sois muy pros, podéis leer <a target=”_blank” href="https://academic.oup.com/bioinformatics/article/40/7/btae416/7698030?guestAccessKey=f4fca1d2-49ec-4b10-b476-5aea3bf37045&login=false&utm_source=authortollfreelink&utm_campaign=bioinformatics&utm_medium=email">este artículo</a>.</p>
+    <p>Desde aquí, le doy mil gracias al equipo de <a target=”_blank” href="https://www.james-zou.com/">James Zou</a> por su grandiosa contribución.</p>
+
+    <br>
+    <h2><img src="https://www.rdkit.org/Images/logo.png" alt="rdkit logo" style="max-height: 50px;"> RDKit</h2>
+    <p>Uno de los engranajes que hacen funcionar a ADMET-AI es <a href="https://www.rdkit.org/">RDKit</a>, software de quimioinformática de código abierto escrito en C++ y con una API para trabajar con Python.</p>
+    <p>Gracias a RDKit, ADMET-AI puede hacer muchos de sus cálculos.</p>
+    <p>Por mi parte, uso RDKit para procesar los códigos SMILES de las moléculas, generar las representaciones en 2D de las moléculas y calcular los índices de similaridad, aunque ofrece tropomil funcionalidades más.</p>
+
+    <br>
+    <h2><img src="https://sqlite.org/images/sqlite370_banner.svg" alt="sqlite logo" style="max-height: 50px;"> SQLite</h2>
+    <p>Hacer una predicción con ADMET-AI tiene un cierto coste computacional. Es verdad que no es un coste extremadamente alto, pero nunca viene mal buscar formas de disminuir el uso de CPU.</p>
+    <p>Una opción es hacer una predicción y almacenarla en una base de datos. Aquí es donde entra <a target=”_blank” href="https://sqlite.org/">SQLite</a>.</p>
+    <p>Es un motor de SQL ligero ideal para un proyecto chiquitito como este.</p>
+
+    <br>
+    <h2><img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" alt="django logo" style="max-height: 50px;"> Django</h2>
+    <p>Ahora que tenemos las predicciones y las guardamos en una base de datos, necesitamos una página web con la que interaccionar.</p>
+    <p><a target=”_blank” href="https://www.djangoproject.com/">Django</a> nos permite usar el lenguaje de programación Python (el mismo con el que nos comunicamos con ADMET-AI) para crear páginas web como esta y comunicarnos con  la base de datos a través de su ORM.</p>
+    <p>Si bien hay alternativas como FastAPI, FastHTML o Flask, mi experiencia en Django es mucho mayor y hacer cosillas como esta me resulta cómodo y sencillo.</p>
+
+    <br>
+    <h2><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Htmx_Logo.png?20240817130933" alt="htmx logo" style="max-height: 50px;"> HTMX</h2>
+    <p>Para conseguir hacer uso de todas las funcionalidades de la web sin tener que recargar cada vez que hacemos click en un botón o en un enlace, podemos crear una SPA (Single Page Application) y hacer uso de los mil y un frameworks de JS que existen en la actualidad.</p>
+    <p>Pero lo siento, yo soy desarrollador backend. Todo lo que sea JavaScript da urticaria.</p>
+    <p>Así que tiro de <a target=”_blank” href="https://htmx.org/">HTMX</a>, un maravilloso framework que ofrece una experiencia similar a las de las SPA pero usando hipermedia como base.</p>
+    <p>Fácil, sencillo y para toda la familia.</p>
+
+    <br>
+    <h2><i class="bi bi-bootstrap-fill"></i> Bootstrap</h2>
+    <p>Por último, para dejarlo todo bonico, he usado <a target=”_blank” href="https://getbootstrap.com/">Bootstrap</a> y <a target=”_blank” href="https://bootswatch.com/quartz/">Bootswatch</a> para darle colorines y cosas bonicas a esta web.</p>
+
+
+</div>
