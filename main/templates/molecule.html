@@ -1,0 +1,422 @@
+<h3>Resultados del análisis</h3>
+
+
+{% if molecule.ld50_zhu_drugbank_approved_percentile %}
+
+<h2>Tu molécula... ¡Mata! ¿Cuánto?</h2>
+
+<p>Es más letal que el {{ molecule.ld50_zhu_drugbank_approved_percentile|floatformat:"0" }}% de las moléculas conocidas.</p>
+
+{% endif %}
+
+
+
+
+<h4>Visualización</h4>
+<div class="card mb-3 border-primary">
+    <div class="card-header">Visualizador molecular 3D</div>
+    <div class="card-body">
+        <div class="card-subtitle">Visualización generada con MolView. En ocasiones podría fallar</div>
+            <iframe style="width: 900px; height: 500px;" frameborder="0" src="https://embed.molview.org/v1/?mode=balls&bg=black&smiles={{ molecule.smiles }}"></iframe>
+    </div>
+</div>
+
+<div class="card mb-3 border-primary">
+    <div class="card-header">Visualizador molecular 2D</div>
+    <div class="card-body">
+        {{ molecule_image|safe }}
+    </div>
+</div>
+
+<h4 style="margin-top: 20px">Representación molecular</h4>
+<div class="card bg-light border-primary">
+    <div class="card-header" >
+        <ul class="nav nav-tabs d-flex justify-content-center" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link active" data-bs-toggle="tab" href="#mol-block" aria-selected="true" role="tab">Bloque Mol</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#smiles" aria-selected="false" role="tab" tabindex="-1">SMILES</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#canonical-smiles" aria-selected="false" role="tab" tabindex="-1">SMILES canónico</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#maccs" aria-selected="false" role="tab" tabindex="-1">MACCS</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#inchi" aria-selected="false" role="tab" tabindex="-1">InChI</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#inchi-key" aria-selected="false" role="tab" tabindex="-1">InChI Key</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#smarts" aria-selected="false" role="tab" tabindex="-1">SMARTS</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#molecular-formula" aria-selected="false" role="tab" tabindex="-1">Fórmula</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a target=”_blank” class="nav-link" data-bs-toggle="tab" href="#molecular-weight" aria-selected="false" role="tab" tabindex="-1">Peso molecular</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+    <div class="tab-content text-start">
+        <div class="tab-pane fade active show" id="mol-block" role="tabpanel">
+            <p class="info-block"><pre>{{ mol_block }}</pre></p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="smiles" role="tabpanel">
+            <p>{{ smiles }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="canonical-smiles" role="tabpanel">
+            <p>{{ canonical_smiles }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="maccs" role="tabpanel">
+            <p>{{ maccs }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="inchi" role="tabpanel">
+            <p>{{ inchi }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="inchi-key" role="tabpanel">
+            <p>{{ inchi_key }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="smarts" role="tabpanel">
+            <p>{{ smarts }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="molecular-formula" role="tabpanel">
+            <p>{{ molecular_formula }}</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+        <div class="tab-pane fade" id="molecular-weight" role="tabpanel">
+            <p>{{ molecular_weight }}g/mol</p>
+            <button class="btn btn-light btn-sm float-end" hx-on:click="const tabPane = this.closest('.tab-pane'); const clone = tabPane.cloneNode(true); clone.querySelector('.btn').remove(); const content = clone.innerText; navigator.clipboard.writeText(content); this.innerText='¡Copiado!'; setTimeout(() => this.innerText='Copiar', 2000)">Copiar</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<h4 style="margin-top: 20px;">Propiedades</h4>
+<div class="card mb-3 border-primary">
+    <div class="card-header">Propiedades fisicoquímicas y ADMET</div>
+    <div class="card-body" style="padding: 0%;">
+        <div class="tab-content text-start">
+            <div class="tab-pane fade active show" id="physicochemistry">
+                <table class="table table-hover" style="margin: 0%;">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Propiedad</th>
+                            <th scope="col">Tipo de Propiedad</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-info">
+                            <th scope="row">Peso Molecular</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.molecular_weight|floatformat:"5"|default:"-" }}</td>
+                            <td>Suma de las masas atómicas en la molécula (Daltons)</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">LogP</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.logp|floatformat:"5"|default:"-" }}</td>
+                            <td>Coeficiente de partición octanol-agua (lipofilia)</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Aceptores de Enlace H</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.hydrogen_bond_acceptors|floatformat:"5"|default:"-" }}</td>
+                            <td>Número de átomos capaces de aceptar enlaces de hidrógeno</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Donadores de Enlace H</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.hydrogen_bond_donors|floatformat:"5"|default:"-" }}</td>
+                            <td>Número de átomos de hidrógeno que pueden donar enlaces</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Regla de Lipinski</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.lipinski|floatformat:"5"|default:"-" }}</td>
+                            <td>Cumplimiento con la Regla de los Cinco de Lipinski</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">QED</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.qed|floatformat:"5"|default:"-" }}</td>
+                            <td>Estimación cuantitativa de similitud a fármaco (0-1)</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Centros Estereogénicos</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.stereo_centers|floatformat:"5"|default:"-" }}</td>
+                            <td>Número de centros quirales en la molécula</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">TPSA</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.tpsa|floatformat:"5"|default:"-" }}</td>
+                            <td>Área de superficie polar topológica (Ų)</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Energía Libre Hidratación</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.hydrationfreeenergy_freesolv|floatformat:"5"|default:"-" }}</td>
+                            <td>Energía libre de hidratación (FreeSolv)</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Lipofilia (AstraZeneca)</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.lipophilicity_astrazeneca|floatformat:"5"|default:"-" }}</td>
+                            <td>Medición experimental de lipofilia</td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">Solubilidad (AqSolDB)</th>
+                            <td>Fisicoquímica</td>
+                            <td>{{ molecule.solubility_aqsoldb|floatformat:"5"|default:"-" }}</td>
+                            <td>Solubilidad acuosa</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">BBB (Martins)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule.bbb_martins|floatformat:"5"|default:"-" }}</td>
+                            <td>Probabilidad de penetración de barrera hematoencefálica</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">Biodisponibilidad</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule.bioavailability_ma|floatformat:"5"|default:"-" }}</td>
+                            <td>Predicción de biodisponibilidad oral</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">HIA (Hou)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule.hia_hou|floatformat:"5"|default:"-" }}</td>
+                            <td>Absorción intestinal humana</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">Caco-2 (Wang)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule.caco2_wang|floatformat:"5"|default:"-" }}</td>
+                            <td>Permeabilidad de células Caco-2 (modelo intestinal)</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">PAMPA (NCATS)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule.pampa_ncats|floatformat:"5"|default:"-" }}</td>
+                            <td>Ensayo de permeabilidad en membrana artificial</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">P-gp (Broccatelli)</th>
+                            <td>Absorción</td>
+                            <td>{{ molecule.pgp_broccatelli|floatformat:"5"|default:"-" }}</td>
+                            <td>Probabilidad de ser sustrato de glicoproteína-P</td>
+                        </tr>
+                        <tr class="table-light">
+                            <th scope="row">VDss (Lombardo)</th>
+                            <td>Distribución</td>
+                            <td>{{ molecule.vdss_lombardo|floatformat:"5"|default:"-" }}</td>
+                            <td>Volumen de distribución en estado estacionario</td>
+                        </tr>
+                        <tr class="table-light">
+                            <th scope="row">PPBR (AZ)</th>
+                            <td>Distribución</td>
+                            <td>{{ molecule.ppbr_az|floatformat:"5"|default:"-" }}</td>
+                            <td>Ratio de unión a proteínas plasmáticas</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP1A2 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp1a2_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>Inhibición de la enzima CYP1A2</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2C19 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp2c19_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>Inhibición de la enzima CYP2C19</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2C9 Sustrato</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp2c9_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                            <td>Probabilidad de ser sustrato de CYP2C9</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2C9 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp2c9_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>Inhibición de la enzima CYP2C9</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2D6 Sustrato</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp2d6_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                            <td>Probabilidad de ser sustrato de CYP2D6</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP2D6 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp2d6_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>Inhibición de la enzima CYP2D6</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP3A4 Sustrato</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp3a4_substrate_carbonmangels|floatformat:"5"|default:"-" }}</td>
+                            <td>Probabilidad de ser sustrato de CYP3A4</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CYP3A4 Inhibición</th>
+                            <td>Metabolismo</td>
+                            <td>{{ molecule.cyp3a4_veith|floatformat:"5"|default:"-" }}</td>
+                            <td>Inhibición de la enzima CYP3A4</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">Aclaramiento Hepatocitos</th>
+                            <td>Excreción</td>
+                            <td>{{ molecule.clearance_hepatocyte_az|floatformat:"5"|default:"-" }}</td>
+                            <td>Tasa de aclaramiento en hepatocitos (AZ)</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">Aclaramiento Microsomas</th>
+                            <td>Excreción</td>
+                            <td>{{ molecule.clearance_microsome_az|floatformat:"5"|default:"-" }}</td>
+                            <td>Tasa de aclaramiento microsomal (AZ)</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">Vida Media (Obach)</th>
+                            <td>Excreción</td>
+                            <td>{{ molecule.half_life_obach|floatformat:"5"|default:"-" }}</td>
+                            <td>Vida media de eliminación plasmática (horas)</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">Test de Ames</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.ames|floatformat:"5"|default:"-" }}</td>
+                            <td>Probabilidad de mutagenicidad</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">Carcinogenicidad</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.carcinogens_lagunin|floatformat:"5"|default:"-" }}</td>
+                            <td>Predicción de carcinogenicidad (Lagunin)</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">ClinTox</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.clintox|floatformat:"5"|default:"-" }}</td>
+                            <td>Predicción de toxicidad clínica</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">DILI</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.dili|floatformat:"5"|default:"-" }}</td>
+                            <td>Riesgo de lesión hepática inducida por fármacos</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">hERG</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.herg|floatformat:"5"|default:"-" }}</td>
+                            <td>Riesgo de inhibición del canal hERG (cardiotoxicidad)</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">Reacción Cutánea</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.skin_reaction|floatformat:"5"|default:"-" }}</td>
+                            <td>Riesgo de sensibilización dérmica/reacción alérgica</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">LD50 (Zhu)</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.ld50_zhu|floatformat:"5"|default:"-" }}</td>
+                            <td>Dosis letal media en roedores</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-AR-LBD</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_ar_lbd|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad del dominio LBD del receptor de andrógenos</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-AR</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_ar|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad del receptor de andrógenos</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-AhR</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_ahr|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad del receptor de hidrocarburos de arilo</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-Aromatasa</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_aromatase|floatformat:"5"|default:"-" }}</td>
+                            <td>Inhibición de la enzima aromatasa</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-ER-LBD</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_er_lbd|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad del dominio LBD del receptor de estrógenos</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-ER</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_er|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad del receptor de estrógenos</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">NR-PPAR-γ</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.nr_ppar_gamma|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad del receptor PPAR gamma</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-ARE</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.sr_are|floatformat:"5"|default:"-" }}</td>
+                            <td>Activación del elemento de respuesta antioxidante</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-ATAD5</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.sr_atad5|floatformat:"5"|default:"-" }}</td>
+                            <td>Actividad de la vía ATAD5 (daño al ADN)</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-HSE</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.sr_hse|floatformat:"5"|default:"-" }}</td>
+                            <td>Activación del elemento de choque térmico</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-MMP</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.sr_mmp|floatformat:"5"|default:"-" }}</td>
+                            <td>Disrupción del potencial de membrana mitocondrial</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">SR-p53</th>
+                            <td>Toxicidad</td>
+                            <td>{{ molecule.sr_p53|floatformat:"5"|default:"-" }}</td>
+                            <td>Activación de la vía p53 (supresor tumoral)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div style="margin-top: 50px;" >
+    <h3 class="text-center">Predicción y análisis de las propiedades de una molécula</h3>
+    <div class="d-flex justify-content-center">
+        <form
+            hx-post="/molecule/"
+            hx-swap="innerHTML"
+            hx-target="#results"
+            hx-indicator="#loading"
+            >
+            {% csrf_token %}
+            <label class="form-label mt-4">Introduce el SMILES de la molécula:</label>
+            <input type="text" class="form-control" name="smilesInput" id="smilesInput" placeholder="P. ej. CCO (etanol), CC(=O)Oc1ccccc1C(=O)O (Aspirina)">
+            <div>
+                <p class="lead">Ejemplos:</p>
+                <button type="button" class="btn btn-success" hx-on:click="document.getElementById('smilesInput').value = 'CCO'">Etanol</button>
+                <button type="button" class="btn btn-success" hx-on:click="document.getElementById('smilesInput').value = 'CC(=O)Oc1ccccc1C(=O)O'">Aspirina</button>
+                <button type="button" class="btn btn-success" hx-on:click="document.getElementById('smilesInput').value = 'CN1C=NC2=C1C(=O)N(C(=O)N2C)C'">Cafeína</button>
+                <button type="button" class="btn btn-success" hx-on:click="document.getElementById('smilesInput').value = 'CC(C)Cc1ccc(cc1)C(C)C(=O)O'">Ibuprofeno</button>
+                <button type="button" class="btn btn-success" hx-on:click="document.getElementById('smilesInput').value = 'CCN(CC)CCSP(=O)(C)OCC(C)C'">VX</button>
+            </div>
+            <div style="margin-top: 5px;">
+                <button type="submit" :disabled="!smilesInput.trim()" class="btn btn-primary"
+                >🔮 Analizar</button>
+                <button type="button" class="btn btn-dark" hx-on:click="document.getElementById('smilesInput').value = ''">🗑️ Borrar </button>
+            </div>
+        </form>
+    </div>
+</div>
+<span id="loading" class="text-center htmx-indicator">
+    <h4>Calculando</h4>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="max-width: 100%;"></div>
+      </div>
+</span>
+<div class="text-center d-flex justify-content-center" style="margin-top: 20px;">
+    <div name="results" id="results"></div>
+</div>
