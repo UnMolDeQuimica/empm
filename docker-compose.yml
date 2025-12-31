@@ -1,0 +1,24 @@
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: empm_django
+    container_name: empm_django
+    depends_on:
+      - redis
+    volumes:
+      - static_volume:/static
+    ports:
+      - '8006:8006'
+
+  redis:
+    image: docker.io/redis:6
+    container_name: empm_redis_data
+    volumes:
+      - empm_redis_data:/data
+
+
+volumes:
+  static_volume: {}
+  empm_redis_data: {}
